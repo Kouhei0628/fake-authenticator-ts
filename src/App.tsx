@@ -1,60 +1,49 @@
 import styled from "@emotion/styled";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CodeList } from "./components/CodeList";
 
 // 10sかけてsvgのストロークが145に達するようにするローダー
-export class Timer extends React.Component {
-  constructor(props: { count: number }) {
-    super(props);
-    this.state = { count: 0 };
-  }
-  tick(): void {
-    if (this.state.count < 145) {
-      this.setState((state) => ({ count: state.count + 0.5 }));
+export const Timer: React.FC = () => {
+  const [count, setCount] = useState<number>(0);
+
+  const tick = () => {
+    if (count < 145) {
+      setCount(prev => prev + 0.5);
     } else {
-      this.setState(() => ({ count: 0 }));
+      setCount(0);
     }
-  }
-  componentDidMount() {
-    this.interval = setInterval(() => this.tick(), 10000 / (145 / 0.5));
-  }
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-  render() {
-    return (
-      <SAfterPie
-        cx="50%"
-        cy="50%"
-        r="22.5"
-        style={{ strokeDasharray: `${this.state.count} 145` }}
-      />
-    );
-  }
-}
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => tick(), 10000 / (145 / 0.5));
+    return () => clearInterval(timer);
+  });
+  return (
+    <SAfterPie
+      cx='50%'
+      cy='50%'
+      r='22.5'
+      style={{ strokeDasharray: `${count} 145` }}
+    />
+  );
+};
 
 // 10sごとに擬似乱数生成
-export class FakeCode10s extends React.Component {
-  constructor(props: { fakeCode: string }) {
-    console.log(props);
-    super(props);
-    this.state = {
-      fakeCode: createFakeCodes(),
-    };
-  }
-  changeFakeCode(): void {
-    this.setState({ fakeCode: createFakeCodes() });
-  }
-  componentDidMount(): void {
-    this.interval = setInterval(() => this.changeFakeCode(), 10000);
-  }
-  componentWillUnmount(): void {
-    clearInterval(this.interval);
-  }
-  render(): string {
-    return this.state.fakeCode;
-  }
-}
+export const FakeCode10s = (): string => {
+  const [fakeCode, setFakeCode] = useState<string>(createFakeCodes());
+
+  const changeFakeCode = () => {
+    setFakeCode(createFakeCodes());
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => changeFakeCode(), 10000);
+    return () => clearInterval(timer);
+  });
+
+  return fakeCode;
+};
+
 // 疑似乱数
 const createFakeCodes = () => {
   const randomNum = Math.floor(Math.random() * 1000000);
@@ -64,7 +53,7 @@ const createFakeCodes = () => {
 
 export default function App() {
   const number: React.MutableRefObject<number[]> = useRef([1, 2, 3]);
-  const initList: JSX.Element[] = number.current.map((num) => (
+  const initList: JSX.Element[] = number.current.map(num => (
     <CodeList key={num} id={num} />
   ));
   let [codeElementList, setCodeElementList] = useState(initList);
