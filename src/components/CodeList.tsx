@@ -7,18 +7,16 @@ type props = {
 };
 
 // コードのリスト（子要素）
-export const CodeList: FC<props> = memo((props) => {
+export const CodeList: FC<props> = memo(props => {
   const { id } = props;
   return (
     <>
       <SCodeLi>
         <p>Fake Code No.{id}</p>
         <SFlexBox>
-          <SFakeCodes>
-            <FakeCode10s />
-          </SFakeCodes>
+          <SFakeCodes>{FakeCode10s()}</SFakeCodes>
           <SPies>
-            <svg viewBox="0 0 90 90" style={{ fill: "none" }}>
+            <svg viewBox='0 0 90 90' style={{ fill: "none" }}>
               <Timer />
             </svg>
           </SPies>
