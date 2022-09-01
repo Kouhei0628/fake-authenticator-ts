@@ -29,7 +29,7 @@ export const Timer: React.FC = () => {
 };
 
 // 10sごとに擬似乱数生成
-export const FakeCode10s = () => {
+export const FakeCode10s = (): string => {
   const [fakeCode, setFakeCode] = useState<string>(createFakeCodes());
 
   const changeFakeCode = () => {
