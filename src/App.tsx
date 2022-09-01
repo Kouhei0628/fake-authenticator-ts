@@ -29,28 +29,21 @@ export const Timer: React.FC = () => {
 };
 
 // 10sごとに擬似乱数生成
+export const FakeCode10s = () => {
+  const [fakeCode, setFakeCode] = useState<string>(createFakeCodes());
 
-export class FakeCode10s extends React.Component {
-  constructor(props: { fakeCode: string }) {
-    console.log(props);
-    super(props);
-    this.state = {
-      fakeCode: createFakeCodes(),
-    };
-  }
-  changeFakeCode(): void {
-    this.setState({ fakeCode: createFakeCodes() });
-  }
-  componentDidMount(): void {
-    this.interval = setInterval(() => this.changeFakeCode(), 10000);
-  }
-  componentWillUnmount(): void {
-    clearInterval(this.interval);
-  }
-  render(): string {
-    return this.state.fakeCode;
-  }
-}
+  const changeFakeCode = () => {
+    setFakeCode(createFakeCodes());
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => changeFakeCode(), 10000);
+    return () => clearInterval(timer);
+  });
+
+  return fakeCode;
+};
+
 // 疑似乱数
 const createFakeCodes = () => {
   const randomNum = Math.floor(Math.random() * 1000000);
