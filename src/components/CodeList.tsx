@@ -5,9 +5,10 @@ import { CountContext } from "../App";
 
 // 疑似乱数
 const createFakeCodes = (): string => {
-  const randomNum = Math.floor(Math.random() * 1000000);
-  const organizedNum = ("000000" + randomNum).slice(-6);
-  return organizedNum.slice(0, 3) + " " + organizedNum.slice(3, 6);
+  const random = Array.from(
+    crypto.getRandomValues(new Uint32Array(1))
+  )[0].toString();
+  return random.slice(0, 3) + " " + random.slice(3, 6);
 };
 
 type props = {
