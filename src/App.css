@@ -18,14 +18,8 @@ button {
     cursor: pointer;
 }
 
-button:hover,
-button:active {
-    background-color: #ff4564;
-    color: white;
-}
-
 button:hover {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: #ff4564;
 }
 
 button:disabled {
