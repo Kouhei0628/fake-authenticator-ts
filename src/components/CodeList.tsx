@@ -49,7 +49,7 @@ const SFakeCodes = styled.p`
   margin: 0;
 `;
 const SCodeLi = styled.li`
-  border-top: 1px solid black;
+  border-top: 1px solid white;
   margin-bottom: 20px;
   &:first-of-type {
     border-top: none;

@@ -40,6 +40,9 @@ export default Action;
 const SBtnWrap = styled.div`
   width: 100%;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
 `;
 const SCodeUl = styled.ul`
   list-style: none;
