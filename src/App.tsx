@@ -1,3 +1,4 @@
+import "./App.css";
 import styled from "@emotion/styled";
 import { createContext, useEffect, useState } from "react";
 import Action from "./components/Action";
