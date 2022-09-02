@@ -21,9 +21,7 @@ export const CodeList: FC<props> = React.memo(({ id }) => {
   const count = useContext(CountContext);
 
   useEffect(() => {
-    if (count === 145) {
-      setFakeCode(createFakeCodes());
-    }
+    if (count === 145) setFakeCode(createFakeCodes());
   }, [count]);
   return (
     <>
@@ -33,7 +31,7 @@ export const CodeList: FC<props> = React.memo(({ id }) => {
           <SFakeCodes>{fakeCode}</SFakeCodes>
           <SPies>
             <svg viewBox='0 0 90 90' style={{ fill: "none" }}>
-              <TimerCircle deg={count} />
+              <TimerCircle />
             </svg>
           </SPies>
         </SFlexBox>

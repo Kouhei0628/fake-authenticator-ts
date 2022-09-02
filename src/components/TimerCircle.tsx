@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
+import { useContext } from "react";
+import { CountContext } from "../App";
 
-type Props = {
-  deg: number;
-};
 // 10sかけてsvgのストロークが145に達するようにするローダー
-const TimerCircle: React.FC<Props> = ({ deg }) => {
+const TimerCircle: React.FC = () => {
+  const deg = useContext(CountContext);
   return (
     <SAfterPie
       cx='50%'
