@@ -24,15 +24,14 @@ export default function App() {
   ];
   const [codeList, setCodeList] = useState<JSX.Element[]>(initItems);
   const onClickPush = (): void => {
-    const newCodeList = [
+    setCodeList([
       ...codeList,
       <CodeList id={codeList.length + 1} key={codeList.length + 1} />,
-    ];
-    setCodeList(newCodeList);
+    ]);
   };
 
   const onClickPop = (): void => {
-    const newCodeList = codeList.pop();
+    setCodeList(codeList.slice(0, codeList.length - 1));
   };
 
   return (
