@@ -59,9 +59,19 @@ const SCodeLi = styled.li`
         opacity: 0;
         clip-path: inset(0 0 100% 0);
       }
-      100% {
+      70% {
         opacity: 1;
         clip-path: inset(0 0 0 0);
+        color: white;
+        background-color: #000;
+      }
+      86% {
+        color: #000;
+        background-color: #fff;
+      }
+      100% {
+        color: white;
+        background-color: #000;
       }
     }
   }
