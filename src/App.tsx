@@ -2,75 +2,37 @@ import styled from "@emotion/styled";
 import React, { useEffect, useRef, useState } from "react";
 import { CodeList } from "./components/CodeList";
 
-// 10sかけてsvgのストロークが145に達するようにするローダー
-export const Timer: React.FC = () => {
-  const [count, setCount] = useState<number>(0);
-
-  const tick = () => {
-    if (count < 145) {
-      setCount(prev => prev + 0.5);
-    } else {
-      setCount(0);
-    }
-  };
-
-  useEffect(() => {
-    const timer = setInterval(() => tick(), 10000 / (145 / 0.5));
-    return () => clearInterval(timer);
-  });
-  return (
-    <SAfterPie
-      cx='50%'
-      cy='50%'
-      r='22.5'
-      style={{ strokeDasharray: `${count} 145` }}
-    />
-  );
-};
-
-// 10sごとに擬似乱数生成
-export const FakeCode10s = (): string => {
-  const [fakeCode, setFakeCode] = useState<string>(createFakeCodes());
-
-  const changeFakeCode = () => {
-    setFakeCode(createFakeCodes());
-  };
-
-  useEffect(() => {
-    const timer = setInterval(() => changeFakeCode(), 10000);
-    return () => clearInterval(timer);
-  });
-
-  return fakeCode;
-};
-
 // 疑似乱数
-const createFakeCodes = () => {
-  const randomNum = Math.floor(Math.random() * 1000000);
-  const organizedNum = ("0" + randomNum).slice(-6);
-  return organizedNum.slice(0, 3) + " " + organizedNum.slice(3, 6);
-};
+// const createFakeCodes = (): string => {
+//   const randomNum = Math.floor(Math.random() * 1000000);
+//   const organizedNum = ("000000" + randomNum).slice(-6);
+//   return organizedNum.slice(0, 3) + " " + organizedNum.slice(3, 6);
+// };
 
 export default function App() {
-  const number: React.MutableRefObject<number[]> = useRef([1, 2, 3]);
-  const initList: JSX.Element[] = number.current.map(num => (
-    <CodeList key={num} id={num} />
-  ));
-  let [codeElementList, setCodeElementList] = useState(initList);
-  codeElementList = initList;
-
+  // const [fakeCode, setFakeCode] = useState<string>(createFakeCodes());
+  // // 10sごとに擬似乱数生成
+  // const changeFakeCode = () => setFakeCode(createFakeCodes());
+  // useEffect(() => {
+  //   const timer = setInterval(() => changeFakeCode, 10000);
+  //   return () => clearInterval(timer);
+  // });
+  const initItems: JSX.Element[] = [
+    <CodeList id={1} key={1} />,
+    <CodeList id={2} key={2} />,
+    <CodeList id={3} key={3} />,
+  ];
+  const [codeList, setCodeList] = useState<JSX.Element[]>(initItems);
   const onClickPush = (): void => {
-    const newNumbers = number.current.push(number.current.length + 1);
-    const newCodeElementList = codeElementList.push(
-      <CodeList key={newNumbers} id={newNumbers} />
-    );
-    setCodeElementList(newCodeElementList);
+    const newCodeList = [
+      ...codeList,
+      <CodeList id={codeList.length + 1} key={codeList.length + 1} />,
+    ];
+    setCodeList(newCodeList);
   };
 
   const onClickPop = (): void => {
-    number.current.pop();
-    const newCodeElementList = codeElementList.pop();
-    setCodeElementList(newCodeElementList);
+    const newCodeList = codeList.pop();
   };
 
   return (
@@ -80,13 +42,13 @@ export default function App() {
         <SBtnWrap>
           <button
             onClick={() => onClickPop()}
-            disabled={number.current.length ? false : true}>
+            disabled={codeList.length ? false : true}>
             -
           </button>
           <button onClick={() => onClickPush()}>+</button>
         </SBtnWrap>
         {/* ここにリストを追加 */}
-        <SCodeUl>{codeElementList}</SCodeUl>
+        <SCodeUl>{codeList}</SCodeUl>
       </SMainDiv>
     </>
   );
@@ -111,12 +73,4 @@ const SBtnWrap = styled.div`
 const SCodeUl = styled.ul`
   list-style: none;
   padding: 0;
-`;
-
-const SAfterPie = styled.circle`
-  transform: rotate(-90deg);
-  transform-origin: center;
-  stroke: #ff4564;
-  stroke-width: 45;
-  stroke-dasharray: 0 145;
 `;
