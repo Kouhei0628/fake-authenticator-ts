@@ -1,23 +1,45 @@
-import { FC, memo } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { FakeCode10s, Timer } from "../App";
+import TimerCircle from "./TimerCircle";
+
+// 疑似乱数
+const createFakeCodes = (): string => {
+  const randomNum = Math.floor(Math.random() * 1000000);
+  const organizedNum = ("000000" + randomNum).slice(-6);
+  return organizedNum.slice(0, 3) + " " + organizedNum.slice(3, 6);
+};
 
 type props = {
   id: number;
 };
 
 // コードのリスト（子要素）
-export const CodeList: FC<props> = memo(props => {
-  const { id } = props;
+export const CodeList: FC<props> = React.memo(({ id }) => {
+  const [fakeCode, setFakeCode] = useState<string>(createFakeCodes());
+  const [count, setCount] = useState<number>(0);
+
+  // 10sごとに擬似乱数生成
+  useEffect(() => {
+    const tick = () => {
+      if (count < 145) {
+        setCount(prev => prev + 0.5);
+      } else {
+        setCount(0);
+        setFakeCode(createFakeCodes());
+      }
+    };
+    const timer = setInterval(() => tick(), 10000 / (145 / 0.5));
+    return () => clearInterval(timer);
+  }, [count]);
   return (
     <>
       <SCodeLi>
         <p>Fake Code No.{id}</p>
         <SFlexBox>
-          <SFakeCodes>{FakeCode10s()}</SFakeCodes>
+          <SFakeCodes>{fakeCode}</SFakeCodes>
           <SPies>
             <svg viewBox='0 0 90 90' style={{ fill: "none" }}>
-              <Timer />
+              <TimerCircle deg={count} />
             </svg>
           </SPies>
         </SFlexBox>
