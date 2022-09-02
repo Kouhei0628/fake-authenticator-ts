@@ -15,10 +15,11 @@ const createFakeCodes = (): string => {
 
 type props = {
   id: number;
+  className?: string;
 };
 
 // liタグ
-export const CodeList: FC<props> = React.memo(({ id }) => {
+export const CodeList: FC<props> = React.memo(({ id, className }) => {
   const [fakeCode, setFakeCode] = useState<string>(createFakeCodes());
   const count = useContext(CountContext);
 
@@ -26,19 +27,17 @@ export const CodeList: FC<props> = React.memo(({ id }) => {
     if (count === 145) setFakeCode(createFakeCodes());
   }, [count]);
   return (
-    <>
-      <SCodeLi>
-        <p>Fake Code No.{id}</p>
-        <SFlexBox>
-          <SFakeCodes>{fakeCode}</SFakeCodes>
-          <SPies>
-            <svg viewBox='0 0 90 90' style={{ fill: "none" }}>
-              <TimerCircle />
-            </svg>
-          </SPies>
-        </SFlexBox>
-      </SCodeLi>
-    </>
+    <SCodeLi className={className}>
+      <p>Fake Code No.{id}</p>
+      <SFlexBox>
+        <SFakeCodes>{fakeCode}</SFakeCodes>
+        <SPies>
+          <svg viewBox='0 0 90 90' style={{ fill: "none" }}>
+            <TimerCircle />
+          </svg>
+        </SPies>
+      </SFlexBox>
+    </SCodeLi>
   );
 });
 
@@ -53,6 +52,19 @@ const SFakeCodes = styled.p`
 const SCodeLi = styled.li`
   border-top: 1px solid white;
   margin-bottom: 20px;
+  &.visible {
+    animation: slideIn 0.3s linear forwards;
+    @keyframes slideIn {
+      0% {
+        opacity: 0;
+        clip-path: inset(0 0 100% 0);
+      }
+      100% {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+      }
+    }
+  }
   &:first-of-type {
     border-top: none;
   }

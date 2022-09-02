@@ -5,16 +5,20 @@ import { CodeList } from "./CodeList";
 const Action: React.FC = () => {
   // 初期状態では3つの乱数を表示
   const initItems: JSX.Element[] = [
-    <CodeList id={1} key={1} />,
-    <CodeList id={2} key={2} />,
-    <CodeList id={3} key={3} />,
+    <CodeList id={1} key={1} className={""} />,
+    <CodeList id={2} key={2} className={""} />,
+    <CodeList id={3} key={3} className={""} />,
   ];
   const [codeList, setCodeList] = useState<JSX.Element[]>(initItems);
 
   const onClickPush = (): void => {
     setCodeList([
       ...codeList,
-      <CodeList id={codeList.length + 1} key={codeList.length + 1} />,
+      <CodeList
+        id={codeList.length + 1}
+        key={codeList.length + 1}
+        className={`visible`}
+      />,
     ]);
   };
 
