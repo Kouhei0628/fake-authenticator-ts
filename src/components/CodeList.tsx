@@ -9,6 +9,7 @@ const createFakeCodes = (): string => {
   const random = Array.from(
     crypto.getRandomValues(new Uint32Array(1))
   )[0].toString();
+  // 強引に6桁の数字にする
   return random.slice(0, 3) + " " + random.slice(3, 6);
 };
 
