@@ -1,6 +1,7 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import TimerCircle from "./TimerCircle";
+import { CountContext } from "../App";
 
 // 疑似乱数
 const createFakeCodes = (): string => {
@@ -16,20 +17,12 @@ type props = {
 // コードのリスト（子要素）
 export const CodeList: FC<props> = React.memo(({ id }) => {
   const [fakeCode, setFakeCode] = useState<string>(createFakeCodes());
-  const [count, setCount] = useState<number>(0);
+  const count = useContext(CountContext);
 
-  // 10sごとに擬似乱数生成
   useEffect(() => {
-    const tick = () => {
-      if (count < 145) {
-        setCount(prev => prev + 0.5);
-      } else {
-        setCount(0);
-        setFakeCode(createFakeCodes());
-      }
-    };
-    const timer = setInterval(() => tick(), 10000 / (145 / 0.5));
-    return () => clearInterval(timer);
+    if (count === 145) {
+      setFakeCode(createFakeCodes());
+    }
   }, [count]);
   return (
     <>

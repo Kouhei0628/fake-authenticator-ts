@@ -1,14 +1,30 @@
 import styled from "@emotion/styled";
+import { createContext, useEffect, useState } from "react";
 import Action from "./components/Action";
 
+export const CountContext = createContext<number>(0);
+
 export default function App() {
+  const [count, setCount] = useState<number>(0);
+  // 10sごとに擬似乱数生成
+  useEffect(() => {
+    const tick = () => {
+      if (count < 145) {
+        setCount(prev => prev + 0.5);
+      } else {
+        setCount(0);
+      }
+    };
+    const timer = setInterval(() => tick(), 10000 / (145 / 0.5));
+    return () => clearInterval(timer);
+  }, [count]);
   return (
-    <>
+    <CountContext.Provider value={count}>
       <SMainDiv>
         <SMainTitle>Fake Authenticator</SMainTitle>
         <Action />
       </SMainDiv>
-    </>
+    </CountContext.Provider>
   );
 }
 
