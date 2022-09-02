@@ -5,6 +5,7 @@ import { CountContext } from "../App";
 
 // 疑似乱数
 const createFakeCodes = (): string => {
+  // 少し堅牢な擬似乱数生成
   const random = Array.from(
     crypto.getRandomValues(new Uint32Array(1))
   )[0].toString();
@@ -15,7 +16,7 @@ type props = {
   id: number;
 };
 
-// コードのリスト（子要素）
+// liタグ
 export const CodeList: FC<props> = React.memo(({ id }) => {
   const [fakeCode, setFakeCode] = useState<string>(createFakeCodes());
   const count = useContext(CountContext);

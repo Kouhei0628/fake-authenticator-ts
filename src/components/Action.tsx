@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import { CodeList } from "./CodeList";
 
 const Action: React.FC = () => {
+  // 初期状態では3つの乱数を表示
   const initItems: JSX.Element[] = [
     <CodeList id={1} key={1} />,
     <CodeList id={2} key={2} />,
     <CodeList id={3} key={3} />,
   ];
   const [codeList, setCodeList] = useState<JSX.Element[]>(initItems);
+
   const onClickPush = (): void => {
     setCodeList([
       ...codeList,

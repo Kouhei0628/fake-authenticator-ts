@@ -7,7 +7,7 @@ export const CountContext = createContext<number>(0);
 
 export default function App() {
   const [count, setCount] = useState<number>(0);
-  // 10sごとに擬似乱数生成
+  // 円グラフの進捗管理
   useEffect(() => {
     const tick = () => {
       if (count < 145) {
